@@ -198,14 +198,14 @@ data_size_t GBDT::BaggingHelper(Random& cur_rand, data_size_t start, data_size_t
 //    CHECK(cur_left_cnt == bag_data_cnt);
     return cur_left_cnt;
   }
-  else if(config_->boost_method == std::string("DPBoost_bagging") || config_->boost_method == std::string("DPBoost_2level")){
+  else if(config_->boost_method == std::string("dpboost_bagging") || config_->boost_method == std::string("dpboost_2level")){
     score_t threshold;
     threshold = 1;
 
     double base = 1 - config_->learning_rate;
     int iter_inside;
     data_size_t bag_data_cnt;
-    if(config_->boost_method == std::string("DPBoost_2level")) {
+    if(config_->boost_method == std::string("dpboost_2level")) {
       iter_inside = iter_ % config_->inner_boost_round;
       if(iter_inside == 0){
         std::fill(already_chosen.begin(), already_chosen.end(), 0);
@@ -274,7 +274,7 @@ data_size_t GBDT::BaggingHelper(Random& cur_rand, data_size_t start, data_size_t
     chosen_data_cnt += chosen_data_cnt_tmp;
     return cur_left_cnt;
   }
-  else if (config_->boost_method == "DPBoost"){
+  else if (config_->boost_method == "dpboost"){
     config_->bagging_fraction = 1;
     data_size_t bag_data_cnt = static_cast<data_size_t>(config_->bagging_fraction * cnt);
     data_size_t cur_left_cnt = 0;
@@ -561,7 +561,7 @@ bool GBDT::TrainOneIter(const score_t* gradients, const score_t* hessians) {
 
 
       int iter_inside;
-      if(config_->boost_method == "DPBoost_2level") {
+      if(config_->boost_method == "dpboost_2level") {
         iter_inside = iter_ % config_->inner_boost_round;
 //        iter_inside = iter_ % (config_->num_iterations / config_->high_level_boost_round);
       }
@@ -582,7 +582,7 @@ bool GBDT::TrainOneIter(const score_t* gradients, const score_t* hessians) {
 
         int change_round = (int) (log((g_m / (1 + lamda)) / 2) / log(base)) + 1;
         double sum;
-        if(config_->boost_method == std::string("DPBoost_2level")){
+        if(config_->boost_method == std::string("dpboost_2level")){
           sum = (change_round * std::pow(g_m / (1 + lamda), 2.0/3.0) +
                         std::pow(2*std::pow(base,change_round) * g_m ,2.0/3.0) * (1-std::pow(base,2.0 / 3.0 *(config_->inner_boost_round-change_round))) / (1-std::pow(base, 2.0/3.0)));
         }
@@ -602,7 +602,7 @@ bool GBDT::TrainOneIter(const score_t* gradients, const score_t* hessians) {
         }
         double laplace_scale;
         double current_budget = 0;
-        if(config_->boost_method == std::string("DPBoost")) {
+        if(config_->boost_method == std::string("dpboost")) {
           current_budget = total_budget * std::pow(sensitivity, 2.0/3.0) / sum;
           laplace_scale = sensitivity / current_budget;
         }
@@ -615,11 +615,11 @@ bool GBDT::TrainOneIter(const score_t* gradients, const score_t* hessians) {
           current_budget = total_budget / total_iter;
           laplace_scale = sensitivity / current_budget;
         }
-        else if(config_->boost_method == std::string("DPBoost_bagging")){
+        else if(config_->boost_method == std::string("dpboost_bagging")){
           current_budget = total_budget;
           laplace_scale = sensitivity / current_budget;
         }
-        else if(config_->boost_method == std::string("DPBoost_2level")){
+        else if(config_->boost_method == std::string("dpboost_2level")){
           if(config_->num_iterations % config_->inner_boost_round == 0) {
             current_budget = total_budget / (config_->num_iterations / config_->inner_boost_round);
           }

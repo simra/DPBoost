@@ -165,6 +165,8 @@ std::unordered_map<std::string, std::string> Config::alias_table({
 });
 
 std::unordered_set<std::string> Config::parameter_set({
+  "total_budget",
+  "boost_method",
   "config",
   "task",
   "objective",
@@ -172,6 +174,10 @@ std::unordered_set<std::string> Config::parameter_set({
   "data",
   "valid",
   "num_iterations",
+  "high_level_boost_round",
+  "inner_boost_round",
+  "balance_partition",
+  "geo_clip",
   "learning_rate",
   "num_leaves",
   "tree_learner",
@@ -282,6 +288,11 @@ std::unordered_set<std::string> Config::parameter_set({
 
 void Config::GetMembersFromString(const std::unordered_map<std::string, std::string>& params) {
   std::string tmp_str = "";
+  GetDouble(params, "total_budget", &total_budget);
+  CHECK(total_budget >=0);
+
+  GetString(params, "boost_method", &boost_method);
+
   GetString(params, "data", &data);
 
   if (GetString(params, "valid", &tmp_str)) {
@@ -290,6 +301,16 @@ void Config::GetMembersFromString(const std::unordered_map<std::string, std::str
 
   GetInt(params, "num_iterations", &num_iterations);
   CHECK(num_iterations >=0);
+
+  GetInt(params, "high_level_boost_round", &high_level_boost_round);
+  CHECK(high_level_boost_round >=0);
+
+  GetInt(params, "inner_boost_round", &inner_boost_round);
+  CHECK(inner_boost_round >=0);
+
+  GetInt(params, "balance_partition", &balance_partition);
+
+  GetInt(params, "geo_clip", &geo_clip);
 
   GetDouble(params, "learning_rate", &learning_rate);
   CHECK(learning_rate >0.0);
@@ -569,9 +590,15 @@ void Config::GetMembersFromString(const std::unordered_map<std::string, std::str
 
 std::string Config::SaveMembersToString() const {
   std::stringstream str_buf;
+  str_buf << "[total_budget: " << total_budget << "]\n";
+  str_buf << "[boost_method: " << boost_method << "]\n";
   str_buf << "[data: " << data << "]\n";
   str_buf << "[valid: " << Common::Join(valid, ",") << "]\n";
   str_buf << "[num_iterations: " << num_iterations << "]\n";
+  str_buf << "[high_level_boost_round: " << high_level_boost_round << "]\n";
+  str_buf << "[inner_boost_round: " << inner_boost_round << "]\n";
+  str_buf << "[balance_partition: " << balance_partition << "]\n";
+  str_buf << "[geo_clip: " << geo_clip << "]\n";
   str_buf << "[learning_rate: " << learning_rate << "]\n";
   str_buf << "[num_leaves: " << num_leaves << "]\n";
   str_buf << "[num_threads: " << num_threads << "]\n";

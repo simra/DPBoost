@@ -266,7 +266,7 @@ Tree* SerialTreeLearner::Train(const score_t* gradients, const score_t *hessians
                                      (1 - std::pow(base, 2.0 * (total_iter - change_round))) /
                                      (1 - std::pow(base, 2.0 / 3.0));
       double sensitivity_this_tree;
-      if(config_->boost_method == std::string("DPBoost_2level")) {
+      if(config_->boost_method == std::string("dpboost_2level")) {
         int inner_iter = global_iter % config_->inner_boost_round;
         if (inner_iter + 1 < change_round)
           sensitivity_this_tree = g_m / (1 + lambda);
@@ -287,7 +287,7 @@ Tree* SerialTreeLearner::Train(const score_t* gradients, const score_t *hessians
       double budget_for_this_tree = 0;
       double budget_for_current_node;
 //      double total_budget_interval = 0;
-      if(config_->boost_method == std::string("DPBoost")) {
+      if(config_->boost_method == std::string("dpboost")) {
         budget_for_this_tree = total_budget * std::pow(sensitivity_this_tree, 2.0/3.0) / sum_leave_sensitivity;
 //        sensitivity_u = (3 * lambda + 2) * g_m * g_m / ((2 + lambda) * (1 + lambda));
         //sensitivity_u = 2 * g_m * g_m / (2 + lambda);
@@ -302,11 +302,11 @@ Tree* SerialTreeLearner::Train(const score_t* gradients, const score_t *hessians
 //        sensitivity_u = 2 * g_m * g_m;
         //sensitivity_u = (3 * lambda + 2) * g_m * g_m / ((2 + lambda) * (1 + lambda));
       }
-      else if(config_->boost_method == std::string("DPBoost_bagging")){
+      else if(config_->boost_method == std::string("dpboost_bagging")){
         budget_for_this_tree = total_budget;
         //sensitivity_u = 2 * g_m * g_m / (2 + lambda);
       }
-      else if(config_->boost_method == std::string("DPBoost_2level")){
+      else if(config_->boost_method == std::string("dpboost_2level")){
 //        budget_for_this_tree = total_budget / config_->high_level_boost_round;
         if(config_->num_iterations % config_->inner_boost_round == 0) {
           budget_for_this_tree = total_budget / (config_->num_iterations / config_->inner_boost_round);

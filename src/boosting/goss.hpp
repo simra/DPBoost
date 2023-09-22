@@ -142,7 +142,7 @@ class GOSS: public GBDT {
 
 //    data_size_t bag_data_cnt =
 //
-    if(config_->boost_method == std::string("DPBoost_bagging")){
+    if(config_->boost_method == std::string("dpboost_bagging")){
       double base = 1 - config_->learning_rate;
       data_size_t bag_data_cnt = static_cast<data_size_t>(std::pow(base, iter_) * (1-base) / (1-std::pow(base, config_->num_iterations)) * cnt);
 //      data_size_t bag_data_cnt = cnt;

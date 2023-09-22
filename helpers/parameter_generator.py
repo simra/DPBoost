@@ -199,6 +199,7 @@ def gen_parameter_description(sections, descriptions, params_rst):
     for section_name, section_params in zip(sections, descriptions):
         params_to_write.append('{0}\n{1}'.format(section_name, '-' * len(section_name)))
         for param_desc in section_params:
+            print(param_desc)
             name = param_desc['name'][0]
             default_raw = param_desc['default'][0]
             default = default_raw.strip('"') if len(default_raw.strip('"')) > 0 else default_raw

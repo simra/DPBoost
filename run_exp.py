@@ -3,7 +3,7 @@ from sklearn.preprocessing import MinMaxScaler
 import lightgbm as lgb
 import time
 
-def experiment(dataset, total_budget, n_trees, boost_method = 'DPBoost_2level', inner_boost_round=50, balance_partition=1):
+def experiment(dataset, total_budget, n_trees, boost_method = 'dpboost_2level', inner_boost_round=50, balance_partition=1):
     x, y = load_svmlight_file(dataset)
     scaler = MinMaxScaler(feature_range=(-1,1))
     scaler.fit(y.reshape(-1,1))
@@ -17,7 +17,7 @@ def experiment(dataset, total_budget, n_trees, boost_method = 'DPBoost_2level', 
         'max_depth': 6,
         'learning_rate': 0.1,
         'num_iterations': n_trees,
-        'my_n_trees': n_trees,
+        # 'my_n_trees': n_trees,
         'lambda_l2': 0.1,
         'bagging_freq': bagging_freq,
         'bagging_fraction':0.5,

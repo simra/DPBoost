@@ -154,7 +154,7 @@ class Tree {
       float threshold;
 //      if(iter <= 20) threshold = 1;
 //      else
-      if(boost_method == std::string("DPBoost") || boost_method == std::string("DPBoost_bagging") || boost_method == std::string("DPBoost_2level")) {
+      if(boost_method == std::string("dpboost") || boost_method == std::string("dpboost_bagging") || boost_method == std::string("dpboost_2level")) {
         if(geo_clip)
           threshold = (float) std::pow(base, iter) * g_m;
         else

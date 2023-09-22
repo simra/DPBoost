@@ -33,6 +33,14 @@ If one parameter appears in both command line and config file, LightGBM will use
 Core Parameters
 ---------------
 
+-  ``total_budget`` :raw-html:`<a id="total_budget" title="Permalink to this parameter" href="#total_budget">&#x1F517;&#xFE0E;</a>`, default = ``0``, type = double, constraints: ``total_budget >= 0``
+
+   -  privacy budget
+
+-  ``boost_method`` :raw-html:`<a id="boost_method" title="Permalink to this parameter" href="#boost_method">&#x1F517;&#xFE0E;</a>`, default = ``DPBoost``, type = enum, options: ``dpboost``, ``dpboost_bagging``, ``dpboost_2Level``, ``equal``, ``infocom``
+
+   -  Boosting method
+
 -  ``config`` :raw-html:`<a id="config" title="Permalink to this parameter" href="#config">&#x1F517;&#xFE0E;</a>`, default = ``""``, type = string, aliases: ``config_file``
 
    -  path of config file
@@ -128,6 +136,22 @@ Core Parameters
    -  number of boosting iterations
 
    -  **Note**: internally, LightGBM constructs ``num_class * num_iterations`` trees for multi-class classification problems
+
+-  ``high_level_boost_round`` :raw-html:`<a id="high_level_boost_round" title="Permalink to this parameter" href="#high_level_boost_round">&#x1F517;&#xFE0E;</a>`, default = ``1``, type = int, constraints: ``high_level_boost_round >= 0``
+
+   -  unknown
+
+-  ``inner_boost_round`` :raw-html:`<a id="inner_boost_round" title="Permalink to this parameter" href="#inner_boost_round">&#x1F517;&#xFE0E;</a>`, default = ``50``, type = int, constraints: ``inner_boost_round >= 0``
+
+   -  unknown
+
+-  ``balance_partition`` :raw-html:`<a id="balance_partition" title="Permalink to this parameter" href="#balance_partition">&#x1F517;&#xFE0E;</a>`, default = ``0``, type = int
+
+   -  unknown
+
+-  ``geo_clip`` :raw-html:`<a id="geo_clip" title="Permalink to this parameter" href="#geo_clip">&#x1F517;&#xFE0E;</a>`, default = ``1``, type = int
+
+   -  unknown
 
 -  ``learning_rate`` :raw-html:`<a id="learning_rate" title="Permalink to this parameter" href="#learning_rate">&#x1F517;&#xFE0E;</a>`, default = ``0.1``, type = double, aliases: ``shrinkage_rate``, ``eta``, constraints: ``learning_rate > 0.0``
 

@@ -83,10 +83,16 @@ struct Config {
   #pragma region Core Parameters
 
 
-
+  // check = >=0
+  // desc = privacy budget
   double total_budget = 0;
 
-  std::string boost_method = "DPBoost";
+  // type = enum
+  // default = "DPBoost"
+  // options = dpboost, dpboost_bagging, dpboost_2Level, equal, infocom
+  // desc = Boosting method
+  std::string boost_method = "dpboost";
+  
   // [doc-only]
   // alias = config_file
   // desc = path of config file
@@ -162,14 +168,22 @@ struct Config {
   // desc = **Note**: internally, LightGBM constructs ``num_class * num_iterations`` trees for multi-class classification problems
   int num_iterations = 100;
 
-  int new_n_iter;
+  // check = >=0
+  // desc = unknown
+  // default = 1
+  int high_level_boost_round = 1; // rsim: was 0;
 
-  int high_level_boost_round = 0;
+  // check = >=0
+  // desc = unknown
+  // default = 50
+  int inner_boost_round = 50;  // rsim: was 0
 
-  int inner_boost_round = 0;
-
+  // desc = unknown
+  // default = 0
   int balance_partition;
 
+  // desc = unknown
+  // default = 1
   int geo_clip = 1;
 
   // alias = shrinkage_rate, eta
